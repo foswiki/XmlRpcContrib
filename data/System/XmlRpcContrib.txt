@@ -85,8 +85,6 @@ returns the formatted response
 creates a =RPC::XML::fault= object using the $error and its $data
 and returns the formatted error response.
 
----++ Settings
-
 ---++ Installation Instructions
 
 %$INSTALL_INSTRUCTIONS%
