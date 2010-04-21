@@ -1,23 +1,16 @@
 %META:TOPICINFO{author="ProjectContributor" date="1023947640" format="1.0" version="1.1"}%
-<!--
-
-   PLEASE DO NOT EDIT THIS TOPIC
-
-   It is automatically generated from the subversion repository, and any changes
-   you make will simply be overwritten the next time a release is generated.
-
-   Instead, you could check your fix in, raise a bug in the Bugs web, or mail the author.
--->
 ---+!! %TOPIC%
 
-XML-RPC services for TWiki
+%SHORTDESCRIPTION%
 
 %TOC%
 
 This package allows to register handlers for remote procedures the same way tags
-are registered to the TWiki engine. The xmlrpc cgi will then call them on request.
+are registered to the Foswiki engine. XML-RPC requests will be handled using a dedicated =xmlrpc= entry point,
+similar to standard =rest= invocations.
 
----++ =XmlRpcContrib=
+---++ =XmlRpcContrib= API
+
 ---+++ =registerRPCHandler($name, $impl)=
 register an implementation for a handler
 
@@ -29,7 +22,7 @@ register an implementation for a handler
 process a remote procedure call
 
 *Parameters*: %BR%
-   * $session: the current TWiki session objecet
+   * $session: the current Foswiki session objecet
    * $data: the net data to be processed (optional)
 
 If no data is passed it is requested from the CGI query object.
@@ -39,7 +32,8 @@ symbolic method name.
 This call will be delegate to =XmlRpcContrib::Server::dispatch= and print
 out its result to STDOUT.
 
----++ =XmlRpcContrib::Server=
+---++ =XmlRpcContrib::Server= API
+
 light implementation of an XML-RPC server
 
 ---+++ =new(%handler)=
@@ -54,7 +48,7 @@ The server is a singleton object in the =XmlRpcContrib= namespace.
 carry out the procedure call
 
 *Parameters*: %BR%
-   * $session: the current TWiki session objecet
+   * $session: the current Foswiki session objecet
    * $data: xml request data
 
 This will call the method implementation if available or return
@@ -65,7 +59,7 @@ an error if not available. A method must implement the interface
 </verbatim>
 
 where:
-   * $session: is the current TWiki session object
+   * $session: is the current Foswiki session object
    * $requestargs: is an array of methods parameters
 
 The handler must return an array ($status, $error, $result) where
@@ -93,33 +87,23 @@ and returns the formatted error response.
 
 ---++ Settings
 
-   * Set SHORTDESCRIPTION = XML-RPC services for TWiki
-   * Set STUB = %$STUB%
-
 ---++ Installation Instructions
 
-   * [[%ATTACHURL%/%TOPIC%.zip][Download]] the ZIP file
-   * Unzip it in your twiki installation directory. Content: 
-   | *File:* | *Description:* |
-   | ==bin/xmlrpc== | server cgi |
-   | ==data/TWiki/XmlRpcContrib.txt== | contrib topic |
-   | ==lib/Foswiki/Contrib/XmlRpcContrib.pm== | perl module |
-   | ==lib/Foswiki/Contrib/XmlRpcContrib/Server.pm== | server module |
-   * possibly enable/secure the xmlrpc in =bin/.htaccess= so that it gets
-     recognized as a cgi script at least
+%$INSTALL_INSTRUCTIONS%
 
----++ Contrib Info
+---++ Info
+<!--
+   * Set SHORTDESCRIPTION = %$SHORTDESCRIPTION%
+-->
 
-|  Author: | TWiki:Main/MichaelDaum |
-|  Copyright &copy;: | 2006, MichaelDaum http://wikiring.com |
+|  Author: | Michael Daum |
+|  Copyright &copy;: | 2006-2010, Michael Daum http://michaeldaumconsulting.com |
 |  License: | GPL ([[http://www.gnu.org/copyleft/gpl.html][GNU General Public License]]) |
 |  CPAN Dependencies: | CPAN:RPC::XML |
-|  Version: | v0.03 |
+|  Version: | %$VERSION% |
+|  Release: | %$RELEASE% |
 |  Change History: | &nbsp; |
 |  15 June 2006: | first public release |
 |  28 May 2006: | Initial version |
 |  Home: | Foswiki:Extensions/%TOPIC% |
-|  Feedback: | Foswiki:Extensions/%TOPIC%Dev |
-|  Appraisal: | Foswiki:Extensions/%TOPIC%Appraisal |
-
--- TWiki:Main/MichaelDaum - 15 June 2006
+|  Support: | Foswiki:Support/%TOPIC% |

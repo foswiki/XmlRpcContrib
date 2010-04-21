@@ -1,13 +1,6 @@
-# XML-RPC server 4 TWiki
+# XML-RPC server 4 Foswiki
 #
-# Copyright (C) 2006 MichaelDaum@WikiRing.com
-#
-# TWiki Contributors are listed in the AUTHORS file in the root of
-# this distribution. NOTE: Please extend that file, not this notice.
-#
-# Additional copyrights apply to some or all of the code in this
-# file as follows:
-# Copyright (C) 2004 Florian Weimer, Crawford Currie http://c-dot.co.uk
+# Copyright (C) 2006-2010 Michael Daum http://michaeldaumconsulting.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -21,19 +14,17 @@
 #
 # As per the GPL, removal of this notice is prohibited.
 
-package TWiki::Contrib::XmlRpcContrib::Server;
-use vars qw(  $debug );
+package Foswiki::Contrib::XmlRpcContrib::Server;
 
-$debug = 0; # toggle me
+use RPC::XML ();
+use RPC::XML::Parser ();
 
-use RPC::XML;
-use RPC::XML::Parser;
+use constant DEBUG => 0; # toggle me
 
 ################################################################################
 # static
 sub writeDebug {
-  #&TWiki::Func::writeDebug('- XmlRpcContrib::Server - '.$_[0]) if $debug;
-  print STDERR '- XmlRpcContrib::Server - '.$_[0]."\n" if $debug;
+  print STDERR '- XmlRpcContrib::Server - '.$_[0]."\n" if DEBUG;
 }
 
 ################################################################################
