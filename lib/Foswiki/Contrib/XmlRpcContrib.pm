@@ -39,7 +39,7 @@ register an implementation for a handler
 =cut
 
 sub registerMethod {
-    getServer()->registerMethod(@_);
+  getServer()->registerMethod(@_);
 }
 
 =begin TML
@@ -51,7 +51,7 @@ process an xml call
 =cut
 
 sub dispatch {
-    getServer()->dispatch(@_);
+  getServer()->dispatch(@_);
 }
 
 =begin TML
@@ -64,12 +64,12 @@ create a singleton server object
 
 sub getServer {
 
-    unless ( defined $SERVER ) {
-        require Foswiki::Contrib::XmlRpcContrib::Server;
-        $SERVER = Foswiki::Contrib::XmlRpcContrib::Server->new();
-    }
+  unless (defined $SERVER) {
+    require Foswiki::Contrib::XmlRpcContrib::Server;
+    $SERVER = Foswiki::Contrib::XmlRpcContrib::Server->new();
+  }
 
-    return $SERVER;
+  return $SERVER;
 }
 
 1;
