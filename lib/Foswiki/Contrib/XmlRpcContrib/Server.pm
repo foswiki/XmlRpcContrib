@@ -1,6 +1,6 @@
 # XML-RPC server for Foswiki
 #
-# Copyright (C) 2006-2012 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2006-2014 Michael Daum http://michaeldaumconsulting.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -14,16 +14,16 @@
 #
 # As per the GPL, removal of this notice is prohibited.
 
+package Foswiki::Contrib::XmlRpcContrib::Server;
+
 use strict;
 use warnings;
-
-package Foswiki::Contrib::XmlRpcContrib::Server;
 
 use RPC::XML ();
 use RPC::XML::Parser ();
 use Error qw( :try );
 
-use constant DEBUG => 0; # toggle me
+use constant TRACE => 0; # toggle me
 
 # predefined error codes:
 # -32700: parse error. not well formed
@@ -40,7 +40,7 @@ use constant DEBUG => 0; # toggle me
 ################################################################################
 # static
 sub writeDebug {
-  print STDERR '- XmlRpcContrib::Server - '.$_[0]."\n" if DEBUG;
+  print STDERR '- XmlRpcContrib::Server - '.$_[0]."\n" if TRACE;
 }
 
 ################################################################################
