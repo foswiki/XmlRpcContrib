@@ -1,6 +1,6 @@
 # Foswiki - The Free and Open Source Wiki, http://foswiki.org/
 #
-# Copyright (C) 2006-2014 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2006-2025 Michael Daum http://michaeldaumconsulting.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -19,16 +19,17 @@ use warnings;
 
 =begin TML
 
----+ package XmlRpcContrib
+---+ package Foswiki::Contrib::XmlRpcContrib
 
 =cut
 
 package Foswiki::Contrib::XmlRpcContrib;
 
-our $VERSION = '1.00';
-our $RELEASE = '1.00';
+our $VERSION = '1.01';
+our $RELEASE = '%$RELEASE%';
 our $SERVER;
 our $SHORTDESCRIPTION = 'xml-rpc interface for foswiki';
+our $LICENSECODE = '%$LICENSECODE%';
 
 =begin TML
 

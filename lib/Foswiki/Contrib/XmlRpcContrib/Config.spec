@@ -1,5 +1,11 @@
 # ---+ Extensions
 # ---++ XmlRpcContrib
-# **PERL H** 
+# **PERL EXPERT H** 
 # This setting is required to enable executing xmlrpc from the bin directory
-$Foswiki::cfg{SwitchBoard}{xmlrpc} = ['Foswiki::Contrib::XmlRpcContrib', 'dispatch', {xmlrpc => 1}];
+$Foswiki::cfg{SwitchBoard}{xmlrpc} = {
+  package => 'Foswiki::Contrib::XmlRpcContrib', 
+  function => 'dispatch', 
+  context => {xmlrpc => 1},
+};
+
+1;

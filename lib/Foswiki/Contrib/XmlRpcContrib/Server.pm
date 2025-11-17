@@ -1,6 +1,6 @@
 # XML-RPC server for Foswiki
 #
-# Copyright (C) 2006-2014 Michael Daum http://michaeldaumconsulting.com
+# Copyright (C) 2006-2025 Michael Daum http://michaeldaumconsulting.com
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -16,6 +16,12 @@
 
 package Foswiki::Contrib::XmlRpcContrib::Server;
 
+=begin TML
+
+---+ package Foswiki::Contrib::XmlRpcContrib::Server
+
+=cut
+
 use strict;
 use warnings;
 
@@ -25,30 +31,32 @@ use Error qw( :try );
 
 use constant TRACE => 0; # toggle me
 
-# predefined error codes:
-# -32700: parse error. not well formed
-# -32701: parse error. unsupported encoding
-# -32702: parse error. invalid character for encoding
-# -32600: server error. invalid xml-rpc. not conforming to spec.
-# -32601: server error. requested method not found
-# -32602: server error. invalid method parameters
-# -32603: server error. internal xml-rpc error
-# -32500: application error
-# -32400: system error
-# -32300: transport error
 
-################################################################################
-# static
-sub writeDebug {
-  print STDERR '- XmlRpcContrib::Server - '.$_[0]."\n" if TRACE;
-}
 
-################################################################################
-# constructor
+=begin TML
+
+---++ ClassMethod new() 
+
+constructor
+
+predefined error codes:
+   * -32700: parse error. not well formed
+   * -32701: parse error. unsupported encoding
+   * -32702: parse error. invalid character for encoding
+   * -32600: server error. invalid xml-rpc. not conforming to spec.
+   * -32601: server error. requested method not found
+   * -32602: server error. invalid method parameters
+   * -32603: server error. internal xml-rpc error
+   * -32500: application error
+   * -32400: system error
+   * -32300: transport error
+
+=cut
+
 sub new {
   my $class = shift;
 
-  writeDebug("called constructor");
+  _writeDebug("called constructor");
 
   my $this = {
     parser=> RPC::XML::Parser->new(),
@@ -58,11 +66,18 @@ sub new {
   return bless($this, $class);
 }
 
-################################################################################
+=begin TML
+
+---++ ObjectMethod registerMethod($methodName, $fnref, %options) 
+
+register a method for the given callback
+
+=cut
+
 sub registerMethod {
   my ($this, $methodName, $fnref, %options) = @_;
 
-  writeDebug("registerMethod($methodName, $fnref)");
+  _writeDebug("registerMethod($methodName, $fnref)");
 
   $this->{handler}{$methodName} = {
     function => $fnref,
@@ -70,11 +85,18 @@ sub registerMethod {
   };
 }
 
-################################################################################
+=begin TML
+
+---++ ObjectMethod dispatch($session, $data) 
+
+dispatch the xmlrpc call as configured to the Foswiki switchboard
+
+=cut
+
 sub dispatch {
   my ($this, $session, $data) = @_;
 
-  writeDebug("called dispatch");
+  _writeDebug("called dispatch");
   $this->{session} = $session;
 
   unless (defined $data) {
@@ -82,7 +104,7 @@ sub dispatch {
     $data = $query->param('POSTDATA') || '';
   }
 
-  #writeDebug("data=$data");
+  #_writeDebug("data=$data");
 
   # check ENV
   if ($ENV{'REQUEST_METHOD'} ne 'POST') {
@@ -129,9 +151,9 @@ sub dispatch {
   };
   $session->leaveContext($name);
 
-  writeDebug("status=$status");
-  writeDebug("error=$error");
-  writeDebug("result=$result");
+  _writeDebug("status=$status");
+  _writeDebug("error=$error");
+  _writeDebug("result=$result");
 
   # print response
   if ($error == 0) {
@@ -144,40 +166,68 @@ sub dispatch {
   return;
 }
 
-################################################################################
+=begin TML
+
+---++ ObjectMethod getError ($error, $data) -> $error
+
+creates an error for the current response
+
+=cut
+
 sub getError  {
   my ($this, $error, $data) = @_;
 
   return $this->getResponse(RPC::XML::fault->new($error, $data));
 }
 
-################################################################################
+=begin TML
+
+---++ ObjectMethod getResponse($data)  -> $response
+
+returns an RPC::XML::response for the given data
+
+=cut
+
 sub getResponse {
   my ($this, $data) = @_;
 
   return RPC::XML::response->new($data);
 }
 
-################################################################################
+=begin TML
+
+---++ ObjectMethod printError($status, $error, $data) 
+
+=cut
+
 sub printError {
   my ($this, $status, $error, $data) = @_;
 
   $this->print($status, $this->getError(-32300, 'Only XML-RPC POST requests recognised.'));
 }
 
-################################################################################
+=begin TML
+
+---++ ObjectMethod print($status, $response) 
+
+prints the result to the session response object
+
+=cut
+
 sub print {
   my ($this, $status, $response) = @_;
 
-  $this->{session}->{response}->header(
+  $this->{session}{response}->header(
     -status  => $status,
     -type    => 'text/plain',
   );
 
-  my $text = $response->as_string;
-print STDERR "response=$text\n";
-
   $this->{session}->{response}->print($response->as_string);
+}
+
+# statuc
+sub _writeDebug {
+  print STDERR '- XmlRpcContrib::Server - '.$_[0]."\n" if TRACE;
 }
 
 1;

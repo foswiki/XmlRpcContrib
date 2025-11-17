@@ -1,5 +1,8 @@
+!noci
 bin/xmlrpc 0755
 data/System/XmlRpcContrib.txt 0644
 lib/Foswiki/Contrib/XmlRpcContrib/Config.spec 0644
+lib/Foswiki/Contrib/XmlRpcContrib/DEPENDENCIES 0644
+lib/Foswiki/Contrib/XmlRpcContrib/MANIFEST 0644
 lib/Foswiki/Contrib/XmlRpcContrib.pm 0644
 lib/Foswiki/Contrib/XmlRpcContrib/Server.pm 0644
